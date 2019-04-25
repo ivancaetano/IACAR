@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  endpointGoogle:"https://cors-anywhere.herokuapp.com/https://maps.googleapis.com",
+  endpointDialog: "https://cors-anywhere.herokuapp.com/https://api.dialogflow.com/v1/query?v=20150910",
+  tokenDialog: "f83d3787d5ce4fde9c98089a292bee81"
 };
 
 /*

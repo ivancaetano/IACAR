@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Insira seus dados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <ion-item>
+      <ion-label position="floating" color="primary">Nome</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('nome').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Nome é obrigatório
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Idade</ion-label>
+      <ion-select formControlName="idade" placeholder="Selecione">
+        <ion-select-option *ngFor="let idade of idades" [value]="idade.value">{{idade.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('idade').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Idade é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-label position="floating" color="primary">Cidade</ion-label>
+      <ion-input type="text" formControlName="cidade"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('cidade').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Cidade é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-label>Situação</ion-label>
+      <ion-segment formControlName="situacao">
+        <ion-segment-button value="U">
+          <ion-icon name="car"></ion-icon> Usado
+        </ion-segment-button>
+        <ion-segment-button value="N">
+          <ion-icon name="logo-model-s"></ion-icon> Novo
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('situacao').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Situação é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-label>Combustível</ion-label>
+      <ion-segment formControlName="combustivel">
+        <ion-segment-button value="G">
+          <i class="material-icons">local_gas_station</i> Gasolina
+        </ion-segment-button>
+        <ion-segment-button value="D">
+          <i class="material-icons">local_gas_station</i> Diesel
+        </ion-segment-button>
+        <ion-segment-button value="F">
+          <i class="material-icons">local_gas_station</i> Flex
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('combustivel').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Combustível é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-label>Trasmissão</ion-label>
+      <ion-segment formControlName="trasmissao">
+        <ion-segment-button value="M">
+          <i class="material-icons">compare_arrows</i> Manual
+        </ion-segment-button>
+        <ion-segment-button value="A">
+          <i class="material-icons">autorenew</i> Automático
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('trasmissao').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Trasmissão é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-range formControlName="motorizacao" min="10" max="20" color="secondary"
+        class="ion-color ion-color-secondary in-item range-has-pin hydrated">
+        <ion-icon slot="start" size="small" name="speedometer" role="img" class="icon-small hydrated"
+          aria-label="contrast"></ion-icon>
+        <ion-icon slot="end" name="speedometer" role="img" class="hydrated" aria-label="contrast"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('motorizacao').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Velocidade é obrigatória
+      </div>
+    </div>
+    <ion-item>
+      <ion-label>Assentos</ion-label>
+      <ion-segment formControlName="assentos">
+        <ion-segment-button value="2">
+          <ion-icon name="people"></ion-icon> 2 Pessoas
+        </ion-segment-button>
+        <ion-segment-button value="5">
+          <ion-icon name="person-add"></ion-icon> 5 Pessoas
+        </ion-segment-button>
+        <ion-segment-button value="7">
+          <ion-icon name="person-add"></ion-icon> 7 Pessoas
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('assentos').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Assentos é obrigatório
+      </div>
+    </div>
+    <ion-item>
+      <ion-range id="preco" formControlName="preco" min="5000" max="200000" dual-knobs=""  color="secondary"
+        class="ion-color ion-color-secondary in-item range-has-pin hydrated">
+        <div slot="start">{{form.get('preco').value.lower | reais}}</div>
+        <div slot="end">{{form.get('preco').value.upper | reais}}</div>
+      </ion-range>
+    </ion-item>
+    <div class="validation-errors">
+      <div class="error-message" *ngIf="form.get('preco').hasError('required')  && submitted">
+        <ion-icon name="information-circle-outline"></ion-icon> Preço é obrigatório
+      </div>
+    </div>
+
+
+
+
+    <ion-button color="primary" class="submit-btn" expand="full" type="submit">
+      Buscar</ion-button>
+  </form>
+</ion-content>

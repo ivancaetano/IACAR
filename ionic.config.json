@@ -1,5 +1,7 @@
 {
   "name": "pwa-sidemenu",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

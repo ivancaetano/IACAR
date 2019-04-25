@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'chat',
     pathMatch: 'full'
   },
   {
@@ -14,11 +14,15 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
-  }
+  },
+  { path: 'insere-dados', loadChildren: './insere-dados/insere-dados.module#InsereDadosPageModule' },
+  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
