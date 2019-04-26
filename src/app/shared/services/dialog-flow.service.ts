@@ -36,9 +36,72 @@ function session() {
   }
   return result;
 }
-export interface Message {
-  remetente?: string;
+export interface Mensagem {
+  icBot: boolean;
   mensagem: string;
-  data?: Date;
+  data: Date;
   enviando?:boolean;
+  tipo:string;
+  opcoes?: Suggestion[];
+}
+export interface Parameters {
+  nome: string;
+}
+
+
+export interface Context {
+  name: string;
+  parameters: Parameters;
+  lifespan: number;
+}
+
+export interface Metadata {
+  intentId: string;
+  webhookUsed: string;
+  webhookForSlotFillingUsed: string;
+  isFallbackIntent: string;
+  intentName: string;
+}
+
+export interface Suggestion {
+  title: string;
+}
+
+export interface Message {
+  type: any;
+  platform: string;
+  textToSpeech: string;
+  suggestions: Suggestion[];
+  speech: string;
+}
+
+export interface Fulfillment {
+  speech: string;
+  messages: Message[];
+}
+
+export interface Result {
+  source: string;
+  resolvedQuery: string;
+  action: string;
+  actionIncomplete: boolean;
+  parameters: Parameters;
+  contexts: Context[];
+  metadata: Metadata;
+  fulfillment: Fulfillment;
+  score: number;
+}
+
+export interface Status {
+  code: number;
+  errorType: string;
+}
+
+export interface Dialogo {
+  id: string;
+  timestamp: Date;
+  lang: string;
+  result: Result;
+  status: Status;
+  sessionId: string;
 }

@@ -1,3 +1,4 @@
+import { PipesModule } from './../shared/pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReaisPipe } from './../shared/pipes/reais.pipe';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    HttpClientModule
+    HttpClientModule,
+    PipesModule
   ],
   declarations: [ChatPage],
   providers: [

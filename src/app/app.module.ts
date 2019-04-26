@@ -1,3 +1,4 @@
+import { ReaisPipe } from './shared/pipes/reais.pipe';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,8 +15,9 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
-    
+    AppRoutingModule,
+
+
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

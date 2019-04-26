@@ -1,4 +1,5 @@
-import { ReaisPipe } from './../shared/pipes/reais.pipe';
+import { PipesModule } from './../shared/pipes/pipes.module';
+
 
 import { GoogleService } from './../shared/services/google.service';
 import { NgModule } from '@angular/core';
@@ -24,10 +25,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    PipesModule
   ],
-  declarations: [InsereDadosPage,
-    ReaisPipe],
+  declarations: [InsereDadosPage],
   providers: [
     GoogleService,
     Geolocation

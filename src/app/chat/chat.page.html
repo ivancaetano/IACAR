@@ -7,32 +7,60 @@
 <ion-content>
   <div class="message-wrap">
 
-    <div *ngFor="let msg of resultados" class="message" [class.left]=" msg.remetente === 'bot' "
-      [class.right]=" msg.remetente === 'user'  ">
-      <img *ngIf=" msg.remetente === 'bot'" src="https://i.ibb.co/Y01dhfF/97106-C2-C-E518-4549-8-CD7-907-D5254-BFBE.png"
-        class="user-img" alt="">
+    <div *ngFor="let msg of resultados" class="message" [class.left]=" msg.icBot " [class.right]=" !msg.icBot  ">
+      <img *ngIf=" msg.icBot " class="user-img" alt="">
       <ion-spinner name="dots" *ngIf="msg.enviando"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-            {{msg.remetente=='bot'?'AI Consultoria':'Você'}}&nbsp;&nbsp;&nbsp;{{msg.data | date: 'shortTime' }}</p>
+            {{msg.icBot?'AI Consultoria':'Você'}}&nbsp;&nbsp;&nbsp;{{msg.data | date: 'shortTime' }}</p>
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
-          <p class="line-breaker ">{{msg.mensagem}}</p>
+          <p class="line-breaker " *ngIf="msg.tipo=='0'">{{msg.mensagem}}</p>
+          <p class="line-breaker " *ngIf="msg.tipo=='suggestion_chips'">
+            <ion-button *ngFor="let o of msg.opcoes" (click)="selecionaOpcao(o.title, msg)" color="primary">{{o.title}}
+            </ion-button>
+          </p>
         </div>
       </div>
     </div>
 
+
   </div>
 </ion-content>
 
-<ion-footer no-border [style.height]="'55px'">
+<ion-footer no-border *ngIf="tipoEntrada=='input.texto'" [style.height]="'55px'">
+  <div class="input-wrap">
+    <textarea placeholder="Digite aqui..." [(ngModel)]="msg" (focusin)="onFocus()" (keyup.enter)="sendMessage()">
+    </textarea>
+
+    <button ion-button clear icon-only item-right (click)="sendMessage()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+</ion-footer>
+<ion-footer no-border *ngIf="tipoEntrada=='input.rangeKM'" [style.height]="'50px'">
   <div class="input-wrap">
 
-    <textarea placeholder="Digite aqui..." [(ngModel)]="msg" (focusin)="onFocus()" (keyup.enter)="sendMessage()">
-      </textarea>
-    <button ion-button clear icon-only item-right (click)="sendMessage()">
+    <ion-range ticks="true" [(ngModel)]="rangeKM" min="0" max="1000" color="secondary">
+      <div slot="start">0 Km</div>
+      <div slot="end">1000 Km</div>
+    </ion-range>
+    <button ion-button clear icon-only item-right (click)="sendKM()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+</ion-footer>
+<ion-footer no-border *ngIf="tipoEntrada=='input.rangePreco'" [style.height]="'50px'">
+  <div class="input-wrap">
+
+    <ion-range [(ngModel)]="rangePreco" min="5000" max="200000" dual-knobs="" color="secondary"
+      class="ion-color ion-color-secondary in-item range-has-pin hydrated">
+      <div slot="start">{{rangePreco.lower | reais}}</div>
+      <div slot="end">{{rangePreco.upper | reais}}</div>
+    </ion-range>
+    <button ion-button clear icon-only item-right (click)="sendPreco()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
     </button>
   </div>

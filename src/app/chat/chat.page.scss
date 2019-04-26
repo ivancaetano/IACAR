@@ -22,7 +22,11 @@ ion-footer {
   border-bottom: 1px #387ef5;
   border-style: solid;
 }
-
+.input-wrap ion-range {
+  flex: 1;
+  border: 0;
+  height: 40px;
+}
 .message-wrap {
   padding: 0 10px;
 }
@@ -86,6 +90,7 @@ ion-footer {
   padding-left: 60px;
 }
 .message-wrap .message.left .user-img {
+  content:url("https://i.ibb.co/Y01dhfF/97106-C2-C-E518-4549-8-CD7-907-D5254-BFBE.png");
   left: 0;
 }
 .message-wrap .message.left .msg-detail .msg-content {
