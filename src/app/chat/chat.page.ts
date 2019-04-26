@@ -13,15 +13,16 @@ export class ChatPage implements OnDestroy {
   resultados: Mensagem[];
   subscription: Subscription;
   rangeKM: number = 100;
-  rangePreco: any = { lower: 10000, upper: 60000 };
-  tipoEntrada: string = 'input.texto';
+  rangePreco: any = { lower: 20000, upper: 50000 };
+  rangeAno: any = { lower: 2016, upper: 2019 };
+  tipoEntrada: string = '';
   constructor(private chatBoot: DialogFlowService) {
     this.initBoot();
 
   }
   onFocus() {
-    const source = interval(1000);
-    this.subscription = source.subscribe(val => this.scrollToBottom());
+    //const source = interval(1000);
+    //this.subscription = source.subscribe(val => this.scrollToBottom());
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -37,22 +38,40 @@ export class ChatPage implements OnDestroy {
       })
   }
   insereMensagens(data: Dialogo) {
+    let tempo = 0;
+    this.tipoEntrada = '';
     data.result.fulfillment.messages
       .filter(m => m.type == 0)
       .forEach((element) => {
-        this.resultados.push({ icBot: true, mensagem: element.speech, data: data.timestamp, tipo: element.type });
+
+        setTimeout(() => {
+          this.resultados.push({ icBot: true, mensagem: element.speech, data: data.timestamp, tipo: element.type });
+          this.scrollToBottom();
+        }, tempo);
+        tempo = tempo + element.speech.length * 25;
 
       });
     data.result.fulfillment.messages
       .filter(m => m.type == 'suggestion_chips')
       .forEach((element) => {
-        this.resultados.push({ icBot: true, mensagem: element.speech, data: data.timestamp, tipo: element.type, opcoes: element.suggestions });
+
+        setTimeout(() => {
+          this.resultados.push({ icBot: true, mensagem: element.speech, data: data.timestamp, tipo: element.type, opcoes: element.suggestions });
+          this.scrollToBottom();
+        }, tempo);
+        tempo = tempo + 500;
+
 
       });
-    this.resultados.forEach(r => {
-      r.enviando = false;
-    });
-    this.tipoEntrada = data.result.action;
+
+    setTimeout(() => {
+      this.resultados.forEach(r => {
+        r.enviando = false;
+      });
+      this.tipoEntrada = data.result.action;
+      this.scrollToBottom();
+    }, tempo);
+
   }
   selecionaOpcao(opcao: string, msg: Mensagem) {
     this.resultados = this.resultados.filter(item => item !== msg);
@@ -73,7 +92,17 @@ export class ChatPage implements OnDestroy {
     this.rangeKM = 100;
   }
   sendPreco() {
-    let msg= 'Preço entre '+this.rangePreco.lower/1000 + ' mil e ' +this.rangePreco.upper/1000 +' mil.'
+    let msg = 'Preço entre ' + this.rangePreco.lower / 1000 + ' mil e ' + this.rangePreco.upper / 1000 + ' mil.'
+    this.resultados.push({ icBot: false, mensagem: msg, data: new Date(), enviando: true, tipo: '0' });
+    this.chatBoot.responde(msg)
+      .subscribe(
+        (lista: Dialogo) => {
+          this.insereMensagens(lista);
+        });
+    this.rangeKM = 100;
+  }
+  sendAno() {
+    let msg = 'Ano entre ' + this.rangeAno.lower + ' e ' + this.rangeAno.upper + '.'
     this.resultados.push({ icBot: false, mensagem: msg, data: new Date(), enviando: true, tipo: '0' });
     this.chatBoot.responde(msg)
       .subscribe(

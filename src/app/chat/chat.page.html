@@ -32,8 +32,8 @@
 
 <ion-footer no-border *ngIf="tipoEntrada=='input.texto'" [style.height]="'55px'">
   <div class="input-wrap">
-    <textarea placeholder="Digite aqui..." [(ngModel)]="msg" (focusin)="onFocus()" (keyup.enter)="sendMessage()">
-    </textarea>
+    <ion-input placeholder="Digite aqui..." [(ngModel)]="msg" (focusin)="onFocus()" (keyup.enter)="sendMessage()">
+    </ion-input>
 
     <button ion-button clear icon-only item-right (click)="sendMessage()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
@@ -55,12 +55,25 @@
 <ion-footer no-border *ngIf="tipoEntrada=='input.rangePreco'" [style.height]="'50px'">
   <div class="input-wrap">
 
-    <ion-range [(ngModel)]="rangePreco" min="5000" max="200000" dual-knobs="" color="secondary"
+    <ion-range [(ngModel)]="rangePreco" min="5000" max="200000" step="1000" dual-knobs="" color="secondary"
       class="ion-color ion-color-secondary in-item range-has-pin hydrated">
       <div slot="start">{{rangePreco.lower | reais}}</div>
       <div slot="end">{{rangePreco.upper | reais}}</div>
     </ion-range>
     <button ion-button clear icon-only item-right (click)="sendPreco()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+</ion-footer>
+<ion-footer no-border *ngIf="tipoEntrada=='input.rangeAno'" [style.height]="'50px'">
+  <div class="input-wrap">
+
+    <ion-range [(ngModel)]="rangeAno" min="1960" max="2020" step="1" dual-knobs="" color="secondary"
+      class="ion-color ion-color-secondary in-item range-has-pin hydrated">
+      <div slot="start">{{rangeAno.lower }}</div>
+      <div slot="end">{{rangeAno.upper }}</div>
+    </ion-range>
+    <button ion-button clear icon-only item-right (click)="sendAno()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
     </button>
   </div>
